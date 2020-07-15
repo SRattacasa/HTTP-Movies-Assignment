@@ -5,6 +5,7 @@ import axios from 'axios'
 const UpdateForm = props => { 
     const history = useHistory()
     const initialForm = {
+        id: '',
         title: '',
         director: '',
         metascore: '',
@@ -27,7 +28,9 @@ const UpdateForm = props => {
         e.preventDefault();
        axios.put(`http://localhost:5000/api/movies/${id}`, formState)
        .then(res => {props.setMovieList(res.data)
+        console.log(res)
         history.push(`/movies/${id}`)
+        props.getMovieList()
     })
        .catch(err => console.log(err))
         console.log("Form submitted", formState);   
@@ -43,6 +46,7 @@ const UpdateForm = props => {
         <div>
     <h1>Update Movie</h1>
     <form onSubmit={formSubmit}> 
+        <input type='text' name='id' placeholder='id' onChange={inputChange} value={formState.id} ></input>
         <input type='text' name='title' placeholder='title' onChange={inputChange} value={formState.title} ></input>
         <input type='text' name='director' placeholder='director' onChange={inputChange} value={formState.director}></input>
         <input type='text' name='metascore' placeholder='metascore' onChange={inputChange} value={formState.metascore}></input>
